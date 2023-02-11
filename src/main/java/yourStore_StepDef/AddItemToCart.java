@@ -11,6 +11,8 @@ import yourStore_Objects.LoginAndResister_PO;
 
 import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class AddItemToCart extends BaseTest {
@@ -21,8 +23,9 @@ public class AddItemToCart extends BaseTest {
     xlsxReader readexcel = new xlsxReader();
     WebDriverWait wait;
     JavascriptExecutor js = (JavascriptExecutor) driver;
-
-
+    List<String> ItemList = new ArrayList<String>();
+    String Iteamname;
+    String itemnamesList;
     @And("Login screen opens and user login with resistered credential")
     public void loginScreenOpensAndUserLoginWithResisteredCredential() throws IOException, InterruptedException {
         ObjLogin = new LoginAndResister_PO(driver);
@@ -56,8 +59,11 @@ public class AddItemToCart extends BaseTest {
         }
 //        JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0,280)", "");
-        ObjLogin.DesktopMac
-                .click();
+        ObjLogin.DesktopMac.click();
+        js.executeScript("window.scrollBy(0,-280)", "");
+
+        Iteamname = ObjLogin.DesktopMacTitle.getText();
+        System.out.println(Iteamname);
         String AddItemMessage = ObjLogin.ItemAddMessage.getText();
         System.out.println(AddItemMessage);
         String refractedAddItemMessage = AddItemMessage.replace(" iMac to your shopping cart!", "");
@@ -66,15 +72,34 @@ public class AddItemToCart extends BaseTest {
             ObjLogin.ShoppingCart.click();
         }
 
+        for (WebElement itemnames : ObjLogin.ShoppingCartList) {
+            itemnamesList = itemnames.getText();
+            ItemList.add(itemnamesList);
+            System.out.println(itemnamesList);
+        }
+
     }
 
     @Then("User verifies item present in the cart")
     public void userVerifiesItamPresentInTheCart() {
+        if (ItemList.contains(Iteamname)) {
+            System.out.println("Product is added to cart");
+        }
+
+//        for(int i = 0; i < ItemList.size(); i++){
+//            if(ItemList.get(i).contains("Iteamname"){
+//                System.out.println("Product is added to cart");
+//            } else {
+//                throw new SkipException("Product could not be found");
+//            }
+//        }
+
 
     }
 
     @Then("User remove item if not available")
     public void userRemoveItemIfNotAvailable() throws InterruptedException {
+
         Thread.sleep(3000);
         driver.quit();
     }

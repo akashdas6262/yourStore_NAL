@@ -52,13 +52,16 @@ public class LoginAndResister_PO {
     public List<WebElement> DesktopOptions;
     @FindBy(xpath = "//span[contains(text(),'Add to Cart')]")
     public WebElement DesktopMac;
+    @FindBy(xpath = "//*[@id='content']/div[2]/div/div/div[2]/div[1]/h4/a")
+    public WebElement DesktopMacTitle;
     @FindBy(xpath = "//div[@class='alert alert-success alert-dismissible']")
     public WebElement ItemAddMessage;
     @FindBy(xpath = "//*[contains(text(),'Shopping Cart')]")
     public WebElement ShoppingCart;
     @FindBy(xpath = "//*[@id='content']/form/div/table/tbody/tr")
     public List<WebElement> ProductListInCart;
-
+    @FindBy(xpath = "//*[@id='content']/form/div/table/tbody/tr/td[2]/a")
+    public List<WebElement> ShoppingCartList;
 
     public LoginAndResister_PO(WebDriver driver) {
         this.driver = driver;
